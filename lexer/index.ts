@@ -58,7 +58,6 @@ export function JSXLexer(jsxString: string): Tokens {
   }
 
   function attributesParser() {
-
     while (true) {
       skipEmpty();
       const char = next();
@@ -69,7 +68,10 @@ export function JSXLexer(jsxString: string): Tokens {
 
       if (char === "/" && peek() === ">") {
         next();
-        tokensArray.push({ type: "tag-self-closing-right-bracket", value: "/>" });
+        tokensArray.push({
+          type: "tag-self-closing-right-bracket",
+          value: "/>",
+        });
         break;
       }
 
@@ -168,27 +170,24 @@ export function JSXLexer(jsxString: string): Tokens {
     } else if (!!char) {
       tokensArray.push({ type: "content", value: char || "" });
       continue;
-    }else {
+    } else {
       break;
     }
   }
 
   for (let i = 0; i < tokensArray.length; i++) {
     const token = tokensArray[i];
-    const concatTypeContentToken = () => {
-        if (token.type === "content") {
-            const nextToken = tokensArray[i + 1];
-            if (nextToken && nextToken.type === "content") {
-                token.value += nextToken.value;
-                tokensArray.splice(i + 1, 1);
-                concatTypeContentToken();
-            }
-        }
+    if (token.type === "content") {
+      const nextToken = tokensArray[i + 1];
+      if (nextToken && nextToken.type === "content") {
+        token.value += nextToken.value;
+        tokensArray.splice(i + 1, 1);
+        i--;
+      }
     }
-    concatTypeContentToken();
   }
 
   return tokensArray;
 }
 
-console.log(JSXLexer("<div a=\"b\">test<Div/>aaxx</div>"))
+// console.log(JSXLexer('<div a="b">test<Div/>aaxx</div>'));
