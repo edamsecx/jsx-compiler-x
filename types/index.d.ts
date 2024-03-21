@@ -13,7 +13,7 @@ type AttributeTypes =
   | "attribute-assign" // =
   | "attribute-value"; // "value"
 
-type ContentTypes = "content-text"; // text
+type ContentTypes = "content"; // text
 
 type TokenTypes = TagTypes | AttributeTypes | ContentTypes;
 

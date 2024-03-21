@@ -168,7 +168,7 @@ export function JSXLexer(jsxString: string): Tokens {
         throw new Error("Unexpected character: <" + nextChar);
       }
     } else if (!!char) {
-      tokensArray.push({ type: "content-text", value: char || "" });
+      tokensArray.push({ type: "content", value: char || "" });
       continue;
     }else {
       break;
