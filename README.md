@@ -24,5 +24,5 @@ JSXCompiler(`<>
 
 ### After
 ```js
-_jsx(_Fragment,{children:_jsx("p",{children:["hello",_jsx("span",{class: "x",a:"b"}),_jsx2(Cmp,{c:"d"})]})});
+_jsx(_Fragment,{children:_jsx("p",{children:["hello",_jsx("span",{class:"x",a:"b"}),_jsx2(Cmp,{c:"d"})]})});
 ```
