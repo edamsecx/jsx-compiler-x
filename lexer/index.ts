@@ -68,7 +68,7 @@ export function JSXLexer(jsxString: string): Tokens {
       }
 
       if (char === "/" && peek() === ">") {
-        next(2);
+        next();
         tokensArray.push({ type: "tag-self-closing-right-bracket", value: "/>" });
         break;
       }
@@ -173,7 +173,22 @@ export function JSXLexer(jsxString: string): Tokens {
     }
   }
 
+  for (let i = 0; i < tokensArray.length; i++) {
+    const token = tokensArray[i];
+    const concatTypeContentToken = () => {
+        if (token.type === "content") {
+            const nextToken = tokensArray[i + 1];
+            if (nextToken && nextToken.type === "content") {
+                token.value += nextToken.value;
+                tokensArray.splice(i + 1, 1);
+                concatTypeContentToken();
+            }
+        }
+    }
+    concatTypeContentToken();
+  }
+
   return tokensArray;
 }
 
-console.log(JSXLexer("<div a=\"b\">test<Div/></div>"))
+console.log(JSXLexer("<div a=\"b\">test<Div/>aaxx</div>"))
