@@ -58,8 +58,6 @@ export function JSXLexer(jsxString: string): Tokens {
   }
 
   function attributesParser() {
-    // a="b" c="d"
-    // => { a: "b", c: "d" }
 
     while (true) {
       skipEmpty();
@@ -69,7 +67,7 @@ export function JSXLexer(jsxString: string): Tokens {
         break;
       }
 
-      if (char === "/" && peek(2) === ">") {
+      if (char === "/" && peek() === ">") {
         next(2);
         tokensArray.push({ type: "tag-self-closing-right-bracket", value: "/>" });
         break;
@@ -77,7 +75,7 @@ export function JSXLexer(jsxString: string): Tokens {
 
       if (!char) throw new Error("Unexpected end of jsx attribute");
 
-      let name = "";
+      let name = char;
       let value = "";
 
       while (/[a-zA-Z_]/.test(peek() || "")) {
@@ -178,4 +176,4 @@ export function JSXLexer(jsxString: string): Tokens {
   return tokensArray;
 }
 
-console.log(JSXLexer("<div>test</div>"))
+console.log(JSXLexer("<div a=\"b\">test<Div/></div>"))
