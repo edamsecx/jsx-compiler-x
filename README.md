@@ -1,6 +1,8 @@
 # jsx-compiler-x
 JSX Lexer &amp; Parser - Compiler| for Zenn
 
+Please understand that it is just a parser for **JSX** itself and does not follow the **ES standard** or **React standard**.
+
 ### Before
 ```jsx
 <>
